@@ -16,3 +16,4 @@ mediapipe
 gradio
 tqdm
 tensorflow
+imutils
