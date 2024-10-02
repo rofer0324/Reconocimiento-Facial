@@ -1,5 +1,0 @@
-/VA
-*.gitignore
-*.gitatributes
-# Ignorar todo el contenido dentro de la carpeta data
-data/*
