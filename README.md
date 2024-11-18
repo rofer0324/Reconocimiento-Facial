@@ -7,13 +7,12 @@ Estudiantes:
 * Anderson González.
 * María Donadío.
 
-# Objetivo general:
+# Resumen del Proyecto:
 
-* Registrar la asistencia en entornos académicos mediante un sistema de reconocimiento de personas basado en visión artificial para automatizar y mejorar la precisión de registros de asistencia.
-
-
-El problema actual radica en la ineficiencia y 
-posibles errores humanos en los métodos tradicionales de registro de asistencia, como hojas de firma,tarjetas de identificación o un llamado. El sistema propuesto abordará estos problemas mediante el uso de tecnologías como el reconocimiento facial o biometría, permitiendo un registro de asistencia más eficiente y preciso. Para su desarrollo, se considerarán herramientas como Python, OpenCV y plataformas de aprendizaje automático como TensorFlow.
+* Este proyecto desarrolla un sistema automatizado de registro de asistencia utilizando tecnologías  de reconocimiento facial e inteligencia artificial. El sistema implementará herramientas como 
+Python, OpenCV, y TensorFlow para lograr la detección precisa de rostros en un entorno académico. A través del reconocimiento facial, el sistema mejorará la precisión, reducirá el tiempo
+de registro y ofrecerá mayor seguridad al eliminar la necesidad de métodos manuales o físicos, como las listas de firma o las tarjetas de identificación. El objetivo es crear un prototipo funcional 
+que sea probado en un aula controlada con un grupo de estudiantes voluntarios.
 
 # Instalacion de Librerias
 ```python
