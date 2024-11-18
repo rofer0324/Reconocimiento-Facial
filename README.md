@@ -19,3 +19,5 @@ que sea probado en un aula controlada con un grupo de estudiantes voluntarios.
 $ pip install -r requirements.txt
 ```
 
+# Recomendaciones:
+Utilizar un entorno configurado para trabajar con tensorflow-gpu para el entrenamiento del modelo.
