@@ -3,21 +3,37 @@
 Proyecto desarrollado para la materia de Tópicos Especiales I / Vision Artificial - 2024
 
 Estudiantes:
+
 * David Rodríguez.
 * Anderson González.
 * María Donadío.
+* Fausto Rivera.
 
 # Resumen del Proyecto:
 
-* Este proyecto desarrolla un sistema automatizado de registro de asistencia utilizando tecnologías  de reconocimiento facial e inteligencia artificial. El sistema implementará herramientas como 
-Python, OpenCV, y TensorFlow para lograr la detección precisa de rostros en un entorno académico. A través del reconocimiento facial, el sistema mejorará la precisión, reducirá el tiempo
-de registro y ofrecerá mayor seguridad al eliminar la necesidad de métodos manuales o físicos, como las listas de firma o las tarjetas de identificación. El objetivo es crear un prototipo funcional 
-que sea probado en un aula controlada con un grupo de estudiantes voluntarios.
+Este proyecto desarrolla un **sistema automatizado de registro de asistencia** utilizando tecnologías de **reconocimiento facial** e  **inteligencia artificial** .
+
+Se implementan herramientas como  **Python** , **OpenCV** y **TensorFlow** para lograr una **detección precisa de rostros** en un entorno académico.
+
+A través del reconocimiento facial, el sistema:
+
+* Mejora la **precisión** en el registro de asistencia.
+* **Reduce el tiempo** de registro manual.
+* **Aumenta la seguridad** eliminando la necesidad de métodos tradicionales como listas de firma o tarjetas de identificación.
+
+El objetivo es construir un **prototipo funcional** que será **probado en un aula controlada** con un grupo de  **estudiantes voluntarios** .
+
+Además, el sistema cuenta con una **interfaz web** desarrollada con **Flask** y  **Django** , que permite:
+
+* Visualizar la  **cámara en vivo** .
+* Ver el **registro actualizado de asistencias** en tiempo real.
 
 # Instalacion de Librerias
+
 ```python
 $ pip install -r requirements.txt
 ```
 
 # Recomendaciones:
+
 Utilizar un entorno configurado para trabajar con tensorflow-gpu para el entrenamiento del modelo.
