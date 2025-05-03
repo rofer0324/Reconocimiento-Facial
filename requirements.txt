@@ -10,8 +10,6 @@ seaborn
 opencv-contrib-python
 pillow
 tabulate
-customtkinter
-prettytable
 mediapipe
 gradio
 tqdm
