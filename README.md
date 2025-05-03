@@ -15,7 +15,7 @@ Estudiantes:
 
 Este proyecto desarrolla un **sistema automatizado de registro de asistencia** utilizando tecnologías de **reconocimiento facial** e  **inteligencia artificial** .
 
-Se implementan herramientas como  **Python** , **OpenCV** y **TensorFlow** para lograr una **detección precisa de rostros** en un entorno académico.
+Se implementan herramientas como  **Python** , **OpenCV** y **Pytorch** para lograr una **detección precisa de rostros** en un entorno académico.
 
 A través del reconocimiento facial, el sistema:
 
@@ -25,7 +25,7 @@ A través del reconocimiento facial, el sistema:
 
 El objetivo es construir un **prototipo funcional** que será **probado en un aula controlada** con un grupo de  **estudiantes voluntarios** .
 
-Además, el sistema cuenta con una **interfaz web** desarrollada con **Flask** y  **Django** , que permite:
+Además, el sistema cuenta con una **interfaz web** desarrollada con **Flask**, lo que permite:
 
 * Visualizar la  **cámara en vivo** .
 * Ver el **registro actualizado de asistencias** en tiempo real.
