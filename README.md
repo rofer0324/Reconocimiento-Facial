@@ -1,6 +1,8 @@
+# Instalacion de Librerias
+
 # Prototipo de Reconocimiento de personas para el registro de asistencia
 
-Proyecto desarrollado para la materia de Tópicos Especiales I / Vision Artificial - 2024
+Proyecto desarrollado para la materia de Tópicos Especiales I / Visión Artificial - 2024
 
 Estudiantes:
 
@@ -28,12 +30,22 @@ Además, el sistema cuenta con una **interfaz web** desarrollada con **Flask** y
 * Visualizar la  **cámara en vivo** .
 * Ver el **registro actualizado de asistencias** en tiempo real.
 
-# Instalacion de Librerias
+# Instalación de Librerías
+
+Para configurar el entorno y todas las dependencias necesarias, utiliza el archivo `environment.yml` de Conda.
+
+1. Clona este repositorio y navega a la carpeta del proyecto.
+2. Crea un entorno virtual con el siguiente comando:
 
 ```python
-$ pip install -r requirements.txt
+$ conda env create -f environment.yml
+```
+
+3. Activa el entorno:
+```python
+$ conda activate <nombre_del_entorno>
 ```
 
 # Recomendaciones:
 
-Utilizar un entorno configurado para trabajar con tensorflow-gpu para el entrenamiento del modelo.
+Utilizar un entorno configurado para trabajar con gpu para el entrenamiento del modelo.
