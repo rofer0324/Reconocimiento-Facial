@@ -1,4 +1,7 @@
-data/*
 .condatmp
 Invitación a Participar en Proyecto de Reconocimiento Facial para Registro de Asistencia.pdf
 requirements.txt
+.vscode
+data/crudo/*
+data/preprocessed/test/*
+data/preprocessed/train/*
