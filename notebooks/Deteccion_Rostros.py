@@ -1,100 +1,118 @@
-import cv2
 import os
+import cv2
 import random
 import mediapipe as mp
 
-def create_directories(base_path, person_name):
-    # Crear las carpetas de train y validation
-    preprocessed_path = os.path.join(base_path, 'preprocessed')
-    train_dir = os.path.join(preprocessed_path, 'train', person_name)
-    test_dir = os.path.join(preprocessed_path, 'test', person_name)
+MAX_IMAGES_PER_PERSON = 300
+TRAIN_SPLIT = 0.8
+FRAME_SKIP = 3
 
+def create_directories(base_path, person_name):
+    train_dir = os.path.join(base_path, 'preprocessed', 'train', person_name)
+    test_dir = os.path.join(base_path, 'preprocessed', 'test', person_name)
     os.makedirs(train_dir, exist_ok=True)
     os.makedirs(test_dir, exist_ok=True)
-
-    print(f'Carpetas creadas: {train_dir} - {test_dir}')
     return train_dir, test_dir
 
-def capture_faces_mediapipe(video_path, max_images):
+def capture_faces_from_video(video_path, max_images):
     cap = cv2.VideoCapture(video_path)
     count = 0
-    captured_faces = []
-    
-    # MediaPipe setup
-    mp_face_detection = mp.solutions.face_detection
-    face_detection = mp_face_detection.FaceDetection(model_selection=1, min_detection_confidence=0.15)
+    faces = []
+    frame_counter = 0
+
+    mp_fd = mp.solutions.face_detection
+    detector = mp_fd.FaceDetection(model_selection=1, min_detection_confidence=0.15)
 
     while True:
         ret, frame = cap.read()
         if not ret or count >= max_images:
             break
 
-        # Procesamiento...
+        frame_counter += 1
+        if frame_counter % FRAME_SKIP != 0:
+            continue
+
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = face_detection.process(frame_rgb)
+        results = detector.process(frame_rgb)
 
         if results.detections:
-            for detection in results.detections:
-                # Extracción de rostro...
-                bboxC = detection.location_data.relative_bounding_box
+            for det in results.detections:
+                bbox = det.location_data.relative_bounding_box
                 ih, iw, _ = frame.shape
-                x = int(bboxC.xmin * iw)
-                y = int(bboxC.ymin * ih)
-                w_box = int(bboxC.width * iw)
-                h_box = int(bboxC.height * ih)
+                x, y = int(bbox.xmin * iw), int(bbox.ymin * ih)
+                w, h = int(bbox.width * iw), int(bbox.height * ih)
 
-                face = frame[y:y+h_box, x:x+w_box]
+                face = frame[y:y+h, x:x+w]
                 if face.size == 0:
                     continue
 
-                face = cv2.resize(face, (224, 224), interpolation=cv2.INTER_CUBIC)
-                captured_faces.append(face)
+                face = cv2.resize(face, (224, 224))
+                faces.append(face)
                 count += 1
+
+                # Dibujar el recuadro verde
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
                 if count >= max_images:
                     break
 
-        cv2.imshow('Video', frame)
+        # Mostrar el frame
+        cv2.imshow("Captura de rostros", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
+            print("Interrupción manual con Q.")
             break
 
     cap.release()
     cv2.destroyAllWindows()
-    return captured_faces
-
-def split_dataset(captured_faces, train_dir, test_dir):
-    total_images = len(captured_faces)
-    
-    if total_images == 0:
-        print("No hay imágenes para dividir.")
-        return
-
-    # Mezclar aleatoriamente las imágenes
-    random.shuffle(captured_faces)
-
-    # Dividir el conjunto en 80% para entrenamiento y 20% para test
-    split_index = int(total_images * 0.8)
-    train_faces = captured_faces[:split_index]
-    test_faces = captured_faces[split_index:]
-    
-    # Saber cuántas imágenes ya existen en las carpetas
-    crops_train = len(os.listdir(train_dir))
-    crops_test = len(os.listdir(test_dir))
+    return faces
 
 
-    # Guardar las imágenes en las carpetas correspondientes SIN sobreescribir
+def get_total_faces_from_videos(videos, base_video_path, max_images):
+    all_faces = []
+    per_video_quota = max_images // len(videos)
+
+    for video in videos:
+        path = os.path.join(base_video_path, video)
+        if not os.path.exists(path):
+            print(f"Video no encontrado: {path}")
+            continue
+
+        faces = capture_faces_from_video(path, per_video_quota)
+        all_faces.extend(faces)
+
+        if len(all_faces) >= max_images:
+            break
+
+    return all_faces[:max_images]  # Asegura tope
+
+def split_dataset(faces, train_dir, test_dir, train_split=TRAIN_SPLIT):
+    random.shuffle(faces)
+    split_idx = int(len(faces) * train_split)
+    train_faces, test_faces = faces[:split_idx], faces[split_idx:]
+
     for i, face in enumerate(train_faces):
-        filename = f'face_{crops_train + i}.jpg'
+        filename = f'face_{len(os.listdir(train_dir)) + i}.jpg'
         cv2.imwrite(os.path.join(train_dir, filename), face)
 
     for i, face in enumerate(test_faces):
-        filename = f'face_{crops_test + i}.jpg'
+        filename = f'face_{len(os.listdir(test_dir)) + i}.jpg'
         cv2.imwrite(os.path.join(test_dir, filename), face)
 
-    print('Distribución de imágenes completada.')
-    
+def iterate_persons(person_dict, base_path, base_video_path):
+    for person_name, videos in person_dict.items():
+        print(f"\nProcesando: {person_name}")
+        train_dir, test_dir = create_directories(base_path, person_name)
+
+        faces = get_total_faces_from_videos(videos, base_video_path, MAX_IMAGES_PER_PERSON)
+        print(f"Total rostros capturados para {person_name}: {len(faces)}")
+
+        if faces:
+            split_dataset(faces, train_dir, test_dir)
+            print(f"División completada: {len(faces)} imágenes -> train/test")
+        else:
+            print(f"No se capturaron rostros para {person_name}.")
+
 def main():
-    # Diccionario de personas y sus respectivos videos
     personas_videos = {
         'Abir Ahmed': ['Abir1.mp4', 'Abir2.mp4'],
         'Adriana Sanchez': ['AdriSa1.mp4', 'AdriSa2.mp4'],
@@ -114,39 +132,11 @@ def main():
         #'Maria Donadio': ['Teresa1.mp4', 'Teresa2.mp4']
         'Alejandro Tulipano': ['Tulipano1.mp4', 'Tulipano2.mp4'],
     }
-    
-    # Ruta base 
-    base_path = '../data'  
-    
-    MAX_IMAGES_PER_PERSON = 300
 
-    # Iterar por cada persona
-    for person_name, videos in personas_videos.items():
-        print(f"\nProcesando a {person_name}...")
+    base_path = '../data'
+    base_video_path = os.path.join(base_path, 'crudo')
 
-        train_dir, test_dir = create_directories(base_path, person_name)
-        total_captured_for_person = 0
-
-        for video_name in videos:
-            video_path = os.path.join(base_path, 'crudo', video_name)
-            if not os.path.exists(video_path):
-                print(f"VIDEO NO ENCONTRADO !!: {video_path}")
-                continue
-
-            print(f"Procesando video...: {video_name}")
-            remaining_images = MAX_IMAGES_PER_PERSON - total_captured_for_person
-            if remaining_images <= 0:
-                break
-
-            # Captura de rostros
-            captured_faces = capture_faces_mediapipe(video_path, remaining_images)
-            total_captured_for_person += len(captured_faces)
-
-            if captured_faces:
-                print(f'Se han capturado {len(captured_faces)} rostros del video {video_name}.')
-                split_dataset(captured_faces, train_dir, test_dir)
-            else:
-                print(f'No se capturaron rostros en {video_name}.')
+    iterate_persons(personas_videos, base_path, base_video_path)
 
 if __name__ == "__main__":
     main()
