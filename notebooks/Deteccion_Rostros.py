@@ -3,9 +3,9 @@ import cv2
 import random
 import mediapipe as mp
 
-MAX_IMAGES_PER_PERSON = 300
+MAX_IMAGES_PER_PERSON = 200
 TRAIN_SPLIT = 0.8
-FRAME_SKIP = 3
+FRAME_SKIP = 5
 
 def create_directories(base_path, person_name):
     train_dir = os.path.join(base_path, 'preprocessed', 'train', person_name)
@@ -45,13 +45,18 @@ def capture_faces_from_video(video_path, max_images):
                 face = frame[y:y+h, x:x+w]
                 if face.size == 0:
                     continue
+                
+                # Convertir a escala de grises (1 canal)
+                face_gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
 
-                face = cv2.resize(face, (224, 224))
-                faces.append(face)
+                # Redimensionar
+                face_resized = cv2.resize(face_gray, (224, 224))
+
+                faces.append(face_resized)
                 count += 1
-
+                
                 # Dibujar el recuadro verde
-                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                #cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
                 if count >= max_images:
                     break
@@ -122,14 +127,12 @@ def main():
         'Carlos Beitia': ['CarlosB1.mp4', 'CarlosB2.mp4'],
         'Carlos Hernandez': ['CarlosH1.mp4', 'CarlosH2.mp4'],
         'Cesar Rodriguez': ['Cesar1.mp4', 'Cesar2.mp4'],
-        #'David Rodriguez': ['David1.mp4', 'David2.mp4'],
         'Javier Bustamante': ['Javier1.mp4', 'Javier2.mp4'],
         'Jeremy Sanchez': ['Jeremy1.mp4', 'Jeremy2.mp4'],
         'Jonathan Peralta': ['Jonathan1.mp4', 'Jonathan2.mp4'],
         'Kevin Rodriguez': ['Kevin1.mp4', 'Kevin2.mp4'],
         'Mahir Arcia': ['Mahir1.mp4', 'Mahir2.mp4'],
         'Michael Jordan': ['Michael1.mp4', 'Michael2.mp4'],
-        #'Maria Donadio': ['Teresa1.mp4', 'Teresa2.mp4']
         'Alejandro Tulipano': ['Tulipano1.mp4', 'Tulipano2.mp4'],
     }
 
