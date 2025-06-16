@@ -1,51 +1,72 @@
-# Instalacion de Librerias
+# 🧠 Prototipo de Reconocimiento Facial para Registro de Asistencia
 
-# Prototipo de Reconocimiento de personas para el registro de asistencia
+## 👥 Estudiantes
 
-Proyecto desarrollado para la materia de Tópicos Especiales I / Visión Artificial - 2024
+- David Rodríguez  
+- Fausto Rivera  
+- Miguel Hidalgo
 
-Estudiantes:
+---
 
-* David Rodríguez.
-* Anderson González.
-* María Donadío.
-* Fausto Rivera.
+## 📌 Resumen del Proyecto
 
-# Resumen del Proyecto:
+Este proyecto desarrolla un **sistema automatizado de registro de asistencia** basado en **reconocimiento facial** e **inteligencia artificial**.  
 
-Este proyecto desarrolla un **sistema automatizado de registro de asistencia** utilizando tecnologías de **reconocimiento facial** e  **inteligencia artificial** .
+Utilizando herramientas como **Python**, **OpenCV**, **PyTorch** y el modelo **ArcFace**, se busca lograr una **detección precisa de rostros** en entornos académicos.
 
-Se implementan herramientas como  **Python** , **OpenCV** y **Pytorch** para lograr una **detección precisa de rostros** en un entorno académico.
+El sistema tiene como objetivos principales:
 
-A través del reconocimiento facial, el sistema:
+- ✅ Mejorar la **precisión** del registro de asistencia.
+- ⏱️ **Reducir el tiempo** requerido en procesos manuales.
+- 🔐 **Aumentar la seguridad**, eliminando listas físicas y tarjetas de identificación.
 
-* Mejora la **precisión** en el registro de asistencia.
-* **Reduce el tiempo** de registro manual.
-* **Aumenta la seguridad** eliminando la necesidad de métodos tradicionales como listas de firma o tarjetas de identificación.
+Este prototipo será **probado en un aula controlada** con un grupo de **estudiantes voluntarios**.
 
-El objetivo es construir un **prototipo funcional** que será **probado en un aula controlada** con un grupo de  **estudiantes voluntarios** .
+### 🔍 Tecnologías Implementadas
 
-Además, el sistema cuenta con una **interfaz web** desarrollada con **Flask**, lo que permite:
+- **Python** para el desarrollo general.
+- **OpenCV** para captura y procesamiento de imágenes.
+- **PyTorch** para la implementación de modelos de aprendizaje profundo.
+- **ArcFace** para el reconocimiento facial de alta precisión.  
+  👉 Referencia: [https://insightface.ai/arcface](https://insightface.ai/arcface)
+- **Flask** para el desarrollo de una interfaz web ligera.
 
-* Visualizar la  **cámara en vivo** .
-* Ver el **registro actualizado de asistencias** en tiempo real.
+### 🌐 Funcionalidades de la Interfaz Web
 
-# Instalación de Librerías
+- Visualización de la **cámara en vivo**.
+- Consulta del **registro de asistencias en tiempo real**.
 
-Para configurar el entorno y todas las dependencias necesarias, utiliza el archivo `environment.yml` de Conda.
+---
 
-1. Clona este repositorio y navega a la carpeta del proyecto.
-2. Crea un entorno virtual con el siguiente comando:
+## ⚙️ Instalación de Librerías
 
-```python
-$ conda env create -f environment.yml
-```
+El entorno de trabajo está gestionado mediante **Conda**. Asegúrate de tenerlo instalado antes de continuar.
+
+1. Clona este repositorio y navega al directorio del proyecto:
+   ```bash
+   git clone <url-del-repositorio>
+   cd <nombre-del-proyecto>
+   ```
+
+2. Crea el entorno virtual usando el archivo `environment.yml`:
+   ```bash
+   conda env create -f environment.yml
+   ```
 
 3. Activa el entorno:
-```python
-$ conda activate <nombre_del_entorno>
-```
+   ```bash
+   conda activate <nombre_del_entorno>
+   ```
 
-# Recomendaciones:
+---
 
-Utilizar un entorno configurado para trabajar con gpu para el entrenamiento del modelo.
+## 🧠 Recomendaciones
+
+- Se recomienda ejecutar este proyecto en una máquina con **soporte GPU**, especialmente para el entrenamiento o inferencia con modelos como ArcFace.
+- Asegúrate de contar con los drivers y bibliotecas CUDA adecuados si usas una GPU NVIDIA.
+
+---
+
+## 📄 Licencia
+
+Este proyecto se distribuye con fines educativos y de investigación.
