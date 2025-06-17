@@ -69,4 +69,6 @@ El entorno de trabajo está gestionado mediante **Conda**. Asegúrate de tenerlo
 
 ## 📄 Licencia
 
-Este proyecto se distribuye con fines educativos y de investigación.
+Este proyecto está licenciado bajo los términos de la licencia MIT.  
+Consulta el archivo [LICENSE](./LICENSE) para más detalles.
+
