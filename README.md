@@ -48,14 +48,14 @@ El entorno de trabajo está gestionado mediante **Conda**. Asegúrate de tenerlo
    cd <nombre-del-proyecto>
    ```
 
-2. Crea el entorno virtual usando el archivo `environment.yml`:
+2. Crea el entorno virtual usando el archivo `env_asistencia.yml`:
    ```bash
-   conda env create -f environment.yml
+   conda env create -f env_asistencia.yml
    ```
 
 3. Activa el entorno:
    ```bash
-   conda activate <nombre_del_entorno>
+   conda activate asistencia
    ```
 
 ---
