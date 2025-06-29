@@ -4,3 +4,5 @@ data/crudo/*
 data/preprocessed/test/*
 data/preprocessed/train/*
 Invitación a Participar en Proyecto de Reconocimiento Facial para Registro de Asistencia.pdf
+
+models/*
