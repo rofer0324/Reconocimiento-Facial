@@ -42,21 +42,46 @@ Este prototipo será **probado en un aula controlada** con un grupo de **estudia
 
 El entorno de trabajo está gestionado mediante **Conda**. Asegúrate de tenerlo instalado antes de continuar.
 
-1. Clona este repositorio y navega al directorio del proyecto:
-   ```bash
-   git clone <url-del-repositorio>
-   cd <nombre-del-proyecto>
-   ```
-
-2. Crea el entorno virtual usando el archivo `env_asistencia.yml`:
+1. Crea el entorno virtual usando el archivo `env_asistencia.yml`:
    ```bash
    conda env create -f env_asistencia.yml
    ```
 
-3. Activa el entorno:
+2. Activa el entorno:
    ```bash
    conda activate asistencia
    ```
+
+---
+## 🚀 Pasos para Ejecutar el Proyecto
+
+1. Preparar la estructura del proyecto
+
+Verifica que la carpeta Data existe y contiene la subcarpeta crudo con los videos sin procesar de los rostros.
+
+2. Ejecutar el script de detección de rostros
+
+* Abre y ejecuta el archivo `Deteccion_Rostros.py`.
+
+* Antes de ejecutarlo, edita el diccionario que define los nombres de las personas y los videos correspondientes.
+
+3. Entrenar el modelo
+
+* Ejecuta el cuaderno Jupyter `train_model3_arcface_torch.ipynb`.
+
+* Este proceso generará los embeddings y ajustará el modelo con las clases definidas.
+
+4. Evaluar el modelo
+
+* Utiliza el cuaderno `Evaluacion_arcface.ipynb` para verificar el desempeño del modelo con las clases entrenadas.
+
+5. Inferencia en vivo y registro de asistencia
+
+* Ejecuta el cuaderno `inference.ipynb`.
+
+* Realizará el reconocimiento facial en tiempo real.
+
+* Registrará la primera y última vez que cada persona fue detectada en asistencia.csv.
 
 ---
 
