@@ -2,8 +2,8 @@
 
 ## 👥 Estudiantes
 
-- David Rodríguez  
-- Fausto Rivera  
+- David Rodríguez
+- Fausto Rivera
 - Miguel Hidalgo
 
 ---
@@ -51,37 +51,85 @@ El entorno de trabajo está gestionado mediante **Conda**. Asegúrate de tenerlo
    ```bash
    conda activate asistencia
    ```
+---
+## 🧬 Entrenamiento del Modelo
+El entrenamiento del modelo de reconocimiento facial se realiza utilizando una implementación personalizada de ArcFace basada en el siguiente repositorio:
+
+🔗 Repositorio Base: https://github.com/CharizardLyon/ArcFace-Implementation
+
+## ⚙️ Configuración utilizada (config/default.yml)
+```yml
+# Training settings
+epochs: 10
+batch_size: 32
+learning_rate: 0.001
+device: cuda
+checkpoint_dir: checkpoints
+
+# Model settings
+backbone: resnet50
+embedding_size: 512
+num_classes: 17
+
+# Arcface settings
+arcface_margin: 0.5
+arcface_scale: 45
+arcface_easy_margin: false
+
+# Data paths
+train_data_path: ../Reconocimiento-Facial/data/preprocessed/train
+val_data_path: ../Reconocimiento-Facial/data/preprocessed/test
+seed: 42
+```
+
+Ejecuta el entrenamiento con:
+
+```bash
+python main.py
+```
+Esto generará los pesos del modelo en la carpeta `checkpoints/`.
+
+## 🖼️ Generación de Embeddings
+1. Prepara una carpeta inference_images/ con una imagen por persona (ej.: Alice.jpg, Bob.jpg, etc.).
+
+2. Ejecuta el siguiente comando para generar los embeddings:
+
+```bash
+python precompute_embeddings.py --checkpoint checkpoints/model_epoch.pth --image_dir inference_images --save_dir embeddings
+```
+Esto generará los archivos:
+
+* `embeddings/embeddings.npy`: vectores faciales generados por el modelo.
+
+* `embeddings/paths.npy`: rutas correspondientes a cada vector de embedding.
+
+⚠️ Estos archivos son esenciales para la etapa de inferencia en tiempo real.
 
 ---
-## 🚀 Pasos para Ejecutar el Proyecto
 
-1. Preparar la estructura del proyecto
+## 🌐 Interfaz Web (Flask GUI)
 
-Verifica que la carpeta Data existe y contiene la subcarpeta crudo con los videos sin procesar de los rostros.
+El repositorio base también incluye una interfaz con Flask que puedes ejecutar localmente para visualizar los resultados:
 
-2. Ejecutar el script de detección de rostros
+```bash
+cd GUI
+python app.py
+```
 
-* Abre y ejecuta el archivo `Deteccion_Rostros.py`.
+Luego abre tu navegador en:
+* 📍 http://localhost:5000
 
-* Antes de ejecutarlo, edita el diccionario que define los nombres de las personas y los videos correspondientes.
+Allí podrás ver:
 
-3. Entrenar el modelo
+* 🎥 Video en vivo desde la webcam
 
-* Ejecuta el cuaderno Jupyter `train_model3_arcface_torch.ipynb`.
+* 🧑‍🤝‍🧑 Nombres detectados en pantalla
 
-* Este proceso generará los embeddings y ajustará el modelo con las clases definidas.
+* 📋 Registro de asistencias con marcas de tiempo
 
-4. Evaluar el modelo
+* 📤 Opción para exportar los datos a CSV
 
-* Utiliza el cuaderno `Evaluacion_arcface.ipynb` para verificar el desempeño del modelo con las clases entrenadas.
-
-5. Inferencia en vivo y registro de asistencia
-
-* Ejecuta el cuaderno `inference.ipynb`.
-
-* Realizará el reconocimiento facial en tiempo real.
-
-* Registrará la primera y última vez que cada persona fue detectada en asistencia.csv.
+✅ Recuerda: los embeddings deben ser generados antes de usar la GUI.
 
 ---
 
@@ -96,4 +144,3 @@ Verifica que la carpeta Data existe y contiene la subcarpeta crudo con los video
 
 Este proyecto está licenciado bajo los términos de la licencia MIT.  
 Consulta el archivo [LICENSE](./LICENSE) para más detalles.
-

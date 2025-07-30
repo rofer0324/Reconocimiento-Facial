@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Welcome to My Site</title>
@@ -34,7 +35,8 @@
             box-sizing: border-box;
         }
 
-        .left, .right {
+        .left,
+        .right {
             flex: 1;
             margin: 10px;
             padding: 30px;
@@ -59,7 +61,7 @@
             border: 2px solid #999;
             border-radius: 10px;
             background-color: #000;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
             overflow: hidden;
         }
 
@@ -83,13 +85,14 @@
 
         .table-container {
             flex-grow: 1;
-            max-height: 350px; /* Made the table smaller */
-            height: 350px; 
+            max-height: 350px;
+            /* Made the table smaller */
+            height: 350px;
             overflow-y: auto;
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #fff;
             margin-bottom: 20px;
         }
@@ -106,7 +109,8 @@
             z-index: 1;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ccc;
@@ -219,10 +223,11 @@
         }
     </style>
 </head>
+
 <body>
     <header>
-        <h1>Welcome to My Flask App</h1>
-        <p>Your one-stop solution for awesomeness</p>
+        <h1>RECONOCIMIENTO FACIAL AUTOMATICO</h1>
+        <p>Una solución eficiente</p>
     </header>
 
     <section class="hero">
@@ -230,33 +235,39 @@
             <div class="video-frame">
                 <img src="{{ url_for('video_feed', device_index=device_index|default(0)) }}" alt="Webcam Feed">
             </div>
-            <form action="/start-camera" method="post" style="margin-top: 20px; text-align: center;">
-                <label for="device_index" style="margin-right: 10px;">Webcam Device Index:</label>
-                <input type="text" id="device_index" name="device_index" placeholder="e.g. 0" required
-                       style="padding: 8px 10px; border-radius: 6px; border: 1px solid #ccc;">
-                <button type="submit" class="styled-webcam-btn" style="margin-left: 10px;">Start Webcam</button>
-            </form>
-            <form action="/stop-camera" method="post" style="margin-top: 20px; text-align: center;">
-                <button type="submit" class="close-webcam-btn">Close Webcam</button>
-            </form>
+            <div style="margin-top: 20px; text-align: center;">
+                <form action="/prev-camera" method="post" style="display: inline;">
+                    <button type="submit" class="styled-webcam-btn">← Anterior</button>
+                </form>
+                <form action="/next-camera" method="post" style="display: inline;">
+                    <button type="submit" class="styled-webcam-btn">Siguiente →</button>
+                </form>
+                <form action="/stop-camera" method="post" style="display: inline;">
+                    <button type="submit" class="close-webcam-btn">Cerrar Cámara</button>
+                </form>
+            </div>
+
         </div>
         <div class="right">
             <h3>Recent Entries</h3>
             <div class="table-container">
                 <table id="entriesTable">
                     <thead>
-                        <tr><th>Name</th><th>Date</th></tr>
+                        <tr>
+                            <th>Name</th>
+                            <th>Date</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {% for row in attendance_rows %}
-                            <tr>
-                                <td>{{ row["Nombre"] }}</td>
-                                <td>{{ row["Fecha"] }}</td>
-                            </tr>
+                        <tr>
+                            <td>{{ row["Nombre"] }}</td>
+                            <td>{{ row["Fecha"] }}</td>
+                        </tr>
                         {% else %}
-                            <tr>
-                                <td colspan="2">No records yet</td>
-                            </tr>
+                        <tr>
+                            <td colspan="2">No records yet</td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -305,4 +316,5 @@
         }
     </script>
 </body>
+
 </html>
